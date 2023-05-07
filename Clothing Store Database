@@ -1,0 +1,15 @@
+create table clothing_store (id integer primary key, name text, color text, quantity integer, price_per_unit integer);
+insert into clothing_store values
+(1, "shirts", "white", 10, 5),
+(2, "shirts", "black", 10, 5),
+(3, "shirts", "red", 10, 5),
+(4, "shirts", "blue", 10, 5),
+(5, "pants", "black", 10, 10),
+(6, "pants", "denim blue", 10, 12),
+(7, "pants", "khaki", 10, 10),
+(8, "pants", "gray", 10, 10),
+(9, "shoes", "black", 10, 15),
+(10, "shoes", "brown", 10, 15);
+select * from clothing_store order by price_per_unit;
+SELECT name, SUM(quantity) FROM clothing_store GROUP BY name;
+select max(price_per_unit) from clothing_store;
