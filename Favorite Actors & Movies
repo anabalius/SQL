@@ -1,0 +1,60 @@
+create table favorite_actors
+    (id integer primary key, name text, age integer, sign text);
+insert into favorite_actors values (1, "Kristen Stewart", 33, "Aries");
+insert into favorite_actors values (2, "Beanie Feldstein", 29, "Cancer");
+insert into favorite_actors values (3, "Viola Davis", 57, "Leo");
+insert into favorite_actors values (4, "Florence Pugh", 27, "Capricorn");
+insert into favorite_actors values (5, "Mia Goth", 29, "Scorpio");
+insert into favorite_actors values (6, "Daniel Kaluuya", 34, "Pisces");
+insert into favorite_actors values (7, "Lupita Nyong'o", 40, "Pisces");
+insert into favorite_actors values (8, "Jennifer Lawrence", 32, "Leo");
+insert into favorite_actors values (9, "Cate Blanchett", 54, "Taurus");
+insert into favorite_actors values (10, "Lea Seydoux", 37, "Cancer");
+
+create table favorite_movies (id integer primary key, name text, actor_id integer);
+insert into favorite_movies values (1, "Midsommar", 4);
+insert into favorite_movies values (2, "Black Panther", 6);
+insert into favorite_movies values (3, "Black Panther", 7);
+insert into favorite_movies values (4, "Crimes of the Future", 1);
+insert into favorite_movies values (5, "Crimes of the Future", 10);
+insert into favorite_movies values (6, "The Help", 3);
+
+create table actor_nationality (id integer primary key, actor_id integer, country_name text);
+insert into actor_nationality values (1, 1, "USA");
+insert into actor_nationality values (2, 2, "USA");
+insert into actor_nationality values (3, 3, "USA");
+insert into actor_nationality values (4, 4, "England");
+insert into actor_nationality values (5, 5, "England");
+insert into actor_nationality values (6, 6, "England");
+insert into actor_nationality values (7, 7, "Mexico");
+insert into actor_nationality values (8, 7, "Kenya");
+insert into actor_nationality values (9, 8, "USA");
+insert into actor_nationality values (10, 9, "Australia");
+insert into actor_nationality values (11, 10, "France");
+
+select * from favorite_actors;
+select * from favorite_movies;
+select * from actor_nationality;
+
+/*Which of my favorite actors star in my favorite movies?*/
+select favorite_movies.name, favorite_actors.name
+    from favorite_movies
+    join favorite_actors
+    on favorite_movies.actor_id=favorite_actors.id;
+    
+/*Which of my favorite actors are from outside of the USA?*/
+select favorite_actors.name
+    from favorite_actors
+    join actor_nationality
+    on favorite_actors.id=actor_nationality.actor_id
+    where not country_name="USA"
+    group by favorite_actors.name;
+
+/*How many of my favorite actors star in my favorite movies?*/
+select favorite_movies.name, count(favorite_movies.name) as favorite_actors_star
+    from favorite_movies
+    left outer join favorite_actors
+    on favorite_movies.actor_id=favorite_actors.id
+    group by favorite_movies.name;
+    
+/* Looks like I'll be watching Black Panther and Crimes of the Future first!*/
